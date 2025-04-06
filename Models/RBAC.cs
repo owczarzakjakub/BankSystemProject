@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,11 +9,10 @@ using BankSystemProject.Enums;
 namespace BankSystemProject.Models
 {
 
-    public class BankUser
+    public class RBAC
     {
-        protected string username;
-        protected string password;
-        protected List<Roles> roles;
+        private readonly Dictionary<Role, List<Permissions>> _permissionsForRoles;
+
 
     }
 }
