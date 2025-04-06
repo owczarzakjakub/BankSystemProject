@@ -10,8 +10,9 @@ namespace BankSystemProject.Enums
     
     public enum Roles
     {
-        Admnin,
+        Admin,
         Manager,
+        Employee,
         User
     }
 }

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using BankSystemProject.Models;
 using BankSystemProject.Enums;
 
-
 namespace BankSystemProject
 {
     internal class Program
