@@ -25,15 +25,14 @@ namespace BankSystemProject.Services
 
         public bool TransferFunds(string fromAccount, string toAccount, decimal amount)
         {
-            if(_accountService.Withdra(fromAccount, amount) && _accountService.Deposit(toAccount, amount))
+            if(_accountService.Withdraw(fromAccount, amount) && _accountService.Deposit(toAccount, amount))
             {
                 LogTransaction(new Transaction
                 {
                     FromAccount = fromAccount,
                     ToAccount = toAccount,
                     Amount = amount,
-                    Date = DateTime.Now,
-                    Type = TransactionType.Transfer
+                    TransactionDate = DateTime.Now,
                 });
                 return true;
             }

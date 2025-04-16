@@ -8,11 +8,14 @@ namespace BankSystemProject.Services
 {
     public class UserService
     {
-        private readonly List<BankUser> _users;
+        private readonly List<BankUser> _users = new();
 
         public UserService()
+        {
 
-        public bool RegisterUser(string username, string password)
+        }
+
+        public bool RegisterUser(string username, string password, string name, string lastName)
         {
             if (_users.Any(u => u.Username == username))
             {
@@ -21,7 +24,9 @@ namespace BankSystemProject.Services
             var newUser = new BankUser
             {
                 Username = username,
-                Password = HashPassword(password),
+                LastName = lastName,
+                Name = name,
+                Password = Operacje_BazyDanych.HashPassword(password),
                 Roles = new List<Roles> { Roles.User }
 
             };
@@ -31,7 +36,7 @@ namespace BankSystemProject.Services
 
         public BankUser? Login(string username, string password)
         {
-            return _users.FirstOrDefault(u => u.Username == username && u.Password == HashPassword(password));
+            return _users.FirstOrDefault(u => u.Username == username && u.Password == Operacje_BazyDanych.HashPassword(password));
         }
 
         public List<BankUser> GetAllUsers()

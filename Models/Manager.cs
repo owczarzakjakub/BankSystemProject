@@ -9,12 +9,13 @@ namespace BankSystemProject.Models
 {
     public class Manager : BankUser
     {
-        public Manager(string name, string lastName, string username, List<Roles> roles)
+        public Manager(string name, string lastName, string username, List<Roles> roles, string password)
         {
             Name = name;
             LastName = lastName;
             Username = username;
             Roles = roles;
+            Password = password;
         }
     }
 }

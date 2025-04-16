@@ -4,7 +4,7 @@ public class Operacje_BazyDanych
 {
     private string sciezkaPliku;
 
-    public PlikTekstowy(string sciezkaPliku)
+    public Operacje_BazyDanych(string sciezkaPliku)
     {
         this.sciezkaPliku = sciezkaPliku;
 
@@ -59,7 +59,7 @@ public class Operacje_BazyDanych
         }
     }
 
-    public string HashPassword(string password)
+    public static string HashPassword(string password)
     {
         using (var sha256 = System.Security.Cryptography.SHA256.Create())
         {

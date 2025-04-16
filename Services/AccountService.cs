@@ -5,7 +5,7 @@ using BankSystemProject.Enums;
 using BankSystemProject.Models;
 
 
-using namespace BankSystemProject.Services
+namespace BankSystemProject.Services
 {
     public class AccountService
     {
@@ -34,7 +34,7 @@ using namespace BankSystemProject.Services
             return true;
         }
 
-        public bool Withdraw(string accountNumber, decimal ammount)
+        public bool Withdraw(string accountNumber, decimal amount)
         {
             var account = _accounts.FirstOrDefault(a => a.AccountNumber == accountNumber);
             if (account == null || amount <= 0 || account.Balance < amount)
@@ -45,7 +45,7 @@ using namespace BankSystemProject.Services
             return true;
         }
 
-        public decimal GetBalance(string accountNumber)
+        public decimal GetAccountBalance(string accountNumber)
         {
             var account = _accounts.FirstOrDefault(a => a.AccountNumber == accountNumber);
             return account?.Balance ?? 0;

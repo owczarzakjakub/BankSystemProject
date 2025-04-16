@@ -5,14 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-using namespace BankSystemProject.Models
+namespace BankSystemProject.Models
 {
     public class Transaction
     {
-        public string TransactionId { get; set; }   
-        public string FromaAccount { get; set; }
+        public string TransactionId { get; set; }
+        public string FromAccount { get; set; }
         public string ToAccount { get; set; }
         public decimal Amount { get; set; }
         public DateTime TransactionDate { get; set; }
 
     }
+}

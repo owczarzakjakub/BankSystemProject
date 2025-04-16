@@ -16,6 +16,7 @@ namespace BankSystemProject.Models
         private string _lastName;
         private string _username;
         public List<Roles> Roles;
+        public string Password { get; set; }
 
 
         public string Name

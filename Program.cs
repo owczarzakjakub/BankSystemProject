@@ -12,8 +12,7 @@ namespace BankSystemProject
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("abc");
-            Console.ReadKey();
+            
         }
     }
 }
