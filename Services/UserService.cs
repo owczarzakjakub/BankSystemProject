@@ -22,7 +22,7 @@ namespace BankSystemProject.Services
             {
                 Username = username,
                 Password = HashPassword(password),
-                Roles = new List<Role> { Role.User }
+                Roles = new List<Roles> { Roles.User }
 
             };
             _users.Add(newUser);

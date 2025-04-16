@@ -5,10 +5,50 @@ using BankSystemProject.Enums;
 using BankSystemProject.Models;
 
 
-using namespace BankSystemProject.Services;
+using namespace BankSystemProject.Services
 {
-	public class AccountService()
-	{
-		
-	}
+    public class AccountService
+    {
+        private readonly List<BankAccount> _accounts;
+
+        public BankAccount CreateAccount(Client client)
+        {
+            var newAccount = new BankAccount
+            {
+                AccountNumber = Guid.NewGuid().ToString(),
+                Balance = 0,
+                Owner = client
+            };
+            _accounts.Add(newAccount);
+            return newAccount;
+        }
+
+        public bool Deposit(string accountNumber, decimal amount)
+        {
+            var account = _accounts.FirstOrDefault(a => a.AccountNumber == accountNumber);
+            if (account == null || amount <= 0)
+            {
+                return false;
+            }
+            account.Balance += amount;
+            return true;
+        }
+
+        public bool Withdraw(string accountNumber, decimal ammount)
+        {
+            var account = _accounts.FirstOrDefault(a => a.AccountNumber == accountNumber);
+            if (account == null || amount <= 0 || account.Balance < amount)
+            {
+                return false;
+            }
+            account.Balance -= amount;
+            return true;
+        }
+
+        public decimal GetBalance(string accountNumber)
+        {
+            var account = _accounts.FirstOrDefault(a => a.AccountNumber == accountNumber);
+            return account?.Balance ?? 0;
+        }
+    }
 }
