@@ -14,6 +14,6 @@ namespace BankSystemProject.Interfaces
 		bool Deposit(string accountNumber, decimal amount);
 		bool Withdraw(string accountNumber, decimal amount);
 		decimal GetAccountBalance(string accountNumber);
-		List<BankAccount> GetAllAccounts();
+		Dictionary<Client, BankAccount> GetAllAccounts();
 	}
 }

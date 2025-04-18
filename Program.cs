@@ -17,6 +17,7 @@ namespace BankSystemProject
             var testFile = new Operacje_BazyDanych("C:\\Users\\User\\source\\repos\\BankSystemProject\\Data\\test.txt");
             var userService = new UserService(testFile);
             userService.RegisterUser("YestUserName", "TestPassword", "TestFirstName", "TestLastName");
+            Console.ReadKey();
 
 
 

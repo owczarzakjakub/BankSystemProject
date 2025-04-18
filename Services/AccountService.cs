@@ -44,11 +44,11 @@ namespace BankSystemProject.Services
                 _bankAccounts.Add(client, newAccount);
                 return newAccount;
             }
-            catch (Exception
 
             catch (Exception ex)
             {
                 Console.WriteLine("Wystąpił błąd podczas tworzenia konta: " + ex.Message);
+                return null;
             }
 
         }
@@ -164,6 +164,11 @@ namespace BankSystemProject.Services
                 Console.WriteLine($"Wystąpił błąd podczas pobierania salda konta: {ex.Message}");
                 return 0;
             }
+        }
+
+        public Dictionary<Client, BankAccount> GetAllAccounts()
+        {
+            return _bankAccounts;
         }
 
     }
