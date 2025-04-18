@@ -15,6 +15,15 @@ namespace BankSystemProject.Services
         private readonly List<BankUser> _users;
         private readonly AccountService _accountService;
 
+        public delegate void AdminCreatedHandler(BankUser newUser);
+        public event AdminCreatedHandler OnUserCreated;
+
+        public delegate void AdminDeletedUserHandler(string username);
+        public event AdminDeletedUserHandler OnUserDeleted;
+
+        public delegate void AdminModifiedAccountBalanceHandler(string accountNumber, decimal amount);
+        public event AdminModifiedAccountBalanceHandler OnAccountBalanceModified;
+
         public AdminService(List<BankUser> users, AccountService accountService)
         {
             _users = users;
@@ -29,12 +38,14 @@ namespace BankSystemProject.Services
             }
             else
             {
-                _users.Add(new BankUser
+                var newUser = new BankUser
                 {
                     Username = username,
                     Password = password,
                     Roles = new List<Roles> { role }
-                });
+                };
+                _users.Add(newUser);
+                OnUserCreated?.Invoke(newUser);
                 return true;
             }
         }
@@ -45,6 +56,7 @@ namespace BankSystemProject.Services
             if (user != null)
             {
                 _users.Remove(user);
+                OnUserDeleted?.Invoke(username);
                 return true;
             }
             return false;
@@ -66,6 +78,7 @@ namespace BankSystemProject.Services
             {
                 _accountService.Withdraw(accountNumber, -amount);
             }
+            OnAccountBalanceModified?.Invoke(accountNumber, amount);
         }
 
     }

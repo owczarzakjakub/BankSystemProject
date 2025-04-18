@@ -12,6 +12,15 @@ namespace BankSystemProject.Services
     {
         private readonly List<BankAccount> _accounts;
 
+        public delegate void BalanceChangeHandler(string accountNumber, decimal amount);
+        public event BalanceChangeHandler OnBalanceChanged;
+
+        public delegate void WithdrawHandler(string accountNumber, decimal amount, bool success);
+        public event WithdrawHandler OnWithdraw;
+
+        public delegate void DepositHandler(string accountNumber, decimal amount);
+        public event DepositHandler OnDeposit;
+
         public BankAccount CreateAccount(Client client)
         {
             var newAccount = new BankAccount
@@ -41,6 +50,8 @@ namespace BankSystemProject.Services
                 return false;
             }
             account.Balance += amount;
+            OnDeposit?.Invoke(accountNumber, amount);
+            OnBalanceChanged?.Invoke(accountNumber, amount);
             return true;
         }
 
