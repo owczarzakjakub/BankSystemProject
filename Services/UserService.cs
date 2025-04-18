@@ -72,6 +72,7 @@ namespace BankSystemProject.Services
                     throw new ArgumentException("Nazwa użytkownika i hasło nie mogą być puste.");
                 }
 
+                var hashedPassword = Operacje_BazyDanych.HashPassword(password);
                 var records = _bazaDanych.ZnajdzRekordy(username);
                 foreach (var record in records)
                 {
@@ -84,9 +85,13 @@ namespace BankSystemProject.Services
                             Password = fields[1],
                             Name = fields[2],
                             LastName = fields[3]
+                            
                         };
-
-                        if (user.Username == username && user.Password == Operacje_BazyDanych.HashPassword(password))
+                        if (Enum.TryParse<Roles>(fields[4], out Roles role))
+                        {
+                            user.Roles = new List<Roles> { role };
+                        }
+                        if (user.Username == username && user.Password == hashedPassword)
                         {
                             OnUserLogin?.Invoke(username, true);
                             return user;

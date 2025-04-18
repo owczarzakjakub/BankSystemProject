@@ -10,19 +10,27 @@ namespace BankSystemProject
     {
         static void Main(string[] args)
         {
+
+
+
             // Inicjalizacja usług
             var operacjeBazaDanych = new Operacje_BazyDanych("C:\\Users\\User\\source\\repos\\BankSystemProject\\Data\\test.txt");
             var userService = new UserService(operacjeBazaDanych);
             var accountService = new AccountService();
             var adminService = new AdminService(accountService, operacjeBazaDanych);
             var rbac = new RBAC();
-            //BankUser testUser = new BankUser
-            //{
-            //    Username = "admin",
-            //    Password = Operacje_BazyDanych.HashPassword("admin123"),
-            //    Roles = new List<Roles> { Roles.Admin }
-            //};
-            //operacjeBazaDanych.DodajRekord($"{testUser.Username};{testUser.Password};{string.Join(",", testUser.Roles)}");
+            BankUser testUser = new BankUser();
+            testUser.Username = "testUser";
+            testUser.Password = "testPassword";
+            testUser.Name = "Jan";
+            testUser.LastName = "Kowalski";
+            testUser.Roles = new List<Roles> { Roles.User };
+            operacjeBazaDanych.DodajRekord($"{testUser.Username};{Operacje_BazyDanych.HashPassword(testUser.Password)};{testUser.Name};{testUser.LastName};{string.Join(",", testUser.Roles)}");
+            foreach (var line in operacjeBazaDanych.OdczytajRekordy())
+            {
+                Console.WriteLine(line);
+            }
+            Console.ReadKey();
 
             // Logowanie użytkownika
             Console.WriteLine("Witaj w systemie bankowym!");
@@ -34,19 +42,23 @@ namespace BankSystemProject
                 string username = Console.ReadLine();
                 Console.Write("Podaj hasło: ");
                 string password = Console.ReadLine();
-                string hashedPassword = Operacje_BazyDanych.HashPassword(password);
-                Console.WriteLine(hashedPassword);
 
-                loggedInUser = userService.Login(username, hashedPassword);
+                loggedInUser = userService.Login(username, password);
+
 
                 if (loggedInUser == null)
                 {
                     Console.WriteLine("Nieprawidłowa nazwa użytkownika lub hasło. Spróbuj ponownie.");
                 }
+                foreach(var role in loggedInUser.Roles)
+                {
+                    Console.WriteLine(role);
+                }
+                Console.ReadKey();
             }
+            
 
             Console.WriteLine($"Zalogowano jako: {loggedInUser.Username}");
-            Console.WriteLine("Twoje role: " + string.Join(", ", loggedInUser.Roles));
 
             bool exit = false;
             while (!exit)
@@ -127,3 +139,4 @@ namespace BankSystemProject
         }
     }
 }
+
