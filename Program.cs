@@ -12,15 +12,14 @@ namespace BankSystemProject
         {
             try
             {
-                // Inicjalizacja usług
-                var operacjeBazaDanych = new Operacje_BazyDanych("C:\\Users\\User\\source\\repos\\BankSystemProject\\Data\\test.txt");
+ 
+                var operacjeBazaDanych = new Operacje_BazyDanych("C:\\Users\\User\\source\\repos\\BankSystemProject\\Data\\Users.txt");
                 var userService = new UserService(operacjeBazaDanych);
                 var accountService = new AccountService();
                 var adminService = new AdminService(accountService, operacjeBazaDanych);
                 var transactionService = new TransactionService(accountService);
                 var rbac = new RBAC();
 
-                // Główne menu
                 while (true)
                 {
                     Console.WriteLine("Witamy w systemie bankowym!");
