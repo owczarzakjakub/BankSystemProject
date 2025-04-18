@@ -41,7 +41,6 @@ namespace BankSystemProject.Models
                 { Roles.Employee, new List<Permissions>
                     {
                         Permissions.Read,
-                        Permissions.ViewAccounts,
                         Permissions.ViewTransactions,
                         Permissions.InitiateTransactions
                     }
@@ -49,7 +48,6 @@ namespace BankSystemProject.Models
                 { Roles.User, new List<Permissions>
                     {
                         Permissions.Read,
-                        Permissions.ViewAccounts,
                         Permissions.ViewTransactions
                     }
                 }

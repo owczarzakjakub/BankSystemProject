@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BankSystemProject.Models;
 using BankSystemProject.Enums;
 using BankSystemProject.Services;
@@ -13,15 +10,120 @@ namespace BankSystemProject
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("1");
-            var testFile = new Operacje_BazyDanych("C:\\Users\\User\\source\\repos\\BankSystemProject\\Data\\test.txt");
-            var userService = new UserService(testFile);
-            userService.RegisterUser("YestUserName", "TestPassword", "TestFirstName", "TestLastName");
-            Console.ReadKey();
+            // Inicjalizacja usług
+            var operacjeBazaDanych = new Operacje_BazyDanych("C:\\Users\\User\\source\\repos\\BankSystemProject\\Data\\test.txt");
+            var userService = new UserService(operacjeBazaDanych);
+            var accountService = new AccountService();
+            var adminService = new AdminService(accountService, operacjeBazaDanych);
+            var rbac = new RBAC();
+            //BankUser testUser = new BankUser
+            //{
+            //    Username = "admin",
+            //    Password = Operacje_BazyDanych.HashPassword("admin123"),
+            //    Roles = new List<Roles> { Roles.Admin }
+            //};
+            //operacjeBazaDanych.DodajRekord($"{testUser.Username};{testUser.Password};{string.Join(",", testUser.Roles)}");
 
+            // Logowanie użytkownika
+            Console.WriteLine("Witaj w systemie bankowym!");
+            BankUser? loggedInUser = null;
 
+            while (loggedInUser == null)
+            {
+                Console.Write("Podaj nazwę użytkownika: ");
+                string username = Console.ReadLine();
+                Console.Write("Podaj hasło: ");
+                string password = Console.ReadLine();
+                string hashedPassword = Operacje_BazyDanych.HashPassword(password);
+                Console.WriteLine(hashedPassword);
 
-            
+                loggedInUser = userService.Login(username, hashedPassword);
+
+                if (loggedInUser == null)
+                {
+                    Console.WriteLine("Nieprawidłowa nazwa użytkownika lub hasło. Spróbuj ponownie.");
+                }
+            }
+
+            Console.WriteLine($"Zalogowano jako: {loggedInUser.Username}");
+            Console.WriteLine("Twoje role: " + string.Join(", ", loggedInUser.Roles));
+
+            bool exit = false;
+            while (!exit)
+            {
+                Console.WriteLine("\nMenu:");
+                Console.WriteLine("1. Wyświetl konta (ViewAccounts)");
+                Console.WriteLine("2. Wyświetl transakcje (ViewTransactions)");
+                Console.WriteLine("3. Dodaj użytkownika (ManageUsers)");
+                Console.WriteLine("4. Wyjdź");
+
+                Console.Write("Wybierz opcję: ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        if (rbac.HasPermission(loggedInUser, Permissions.ViewAccounts))
+                        {
+                            var accounts = accountService.GetAllAccounts();
+                            foreach (var account in accounts)
+                            {
+                                Console.WriteLine($"Konto: {account.Value.AccountNumber}, Saldo: {account.Value.Balance}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Brak uprawnień do przeglądania kont.");
+                        }
+                        break;
+
+                    case "2":
+                        if (rbac.HasPermission(loggedInUser, Permissions.ViewTransactions))
+                        {
+                            Console.WriteLine("Wyświetlanie transakcji...");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Brak uprawnień do przeglądania transakcji.");
+                        }
+                        break;
+
+                    case "3":
+                        if (rbac.HasPermission(loggedInUser, Permissions.ManageUsers))
+                        {
+                            Console.Write("Podaj nazwę użytkownika: ");
+                            string newUsername = Console.ReadLine();
+                            Console.Write("Podaj hasło: ");
+                            string newPassword = Console.ReadLine();
+                            Console.Write("Podaj rolę (Admin, Manager, Employee, User): ");
+                            string roleInput = Console.ReadLine();
+
+                            if (Enum.TryParse(roleInput, out Roles role))
+                            {
+                                adminService.CreateUser(newUsername, newPassword, role);
+                                Console.WriteLine("Użytkownik został dodany.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Nieprawidłowa rola.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Brak uprawnień do zarządzania użytkownikami.");
+                        }
+                        break;
+
+                    case "4":
+                        exit = true;
+                        Console.WriteLine("Wylogowano. Do widzenia!");
+                        break;
+
+                    default:
+                        Console.WriteLine("Nieprawidłowa opcja. Spróbuj ponownie.");
+                        break;
+                }
+            }
         }
     }
 }
