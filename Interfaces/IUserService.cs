@@ -11,6 +11,6 @@ namespace BankSystemProject.Interfaces
     {
         bool RegisterUser(string username, string password, string name, string lastName);
         BankUser Login(string username, string password);
-        List<BankUser> GetAllUsers();
+        List<string> GetAllUsers();
     }
 }
