@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BankSystemProject.Models;
+using BankSystemProject.Enums;
 
 
 namespace BankSystemProject.Interfaces

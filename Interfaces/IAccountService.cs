@@ -9,7 +9,7 @@ namespace BankSystemProject.Interfaces
 {
 	public interface IAccountService
 	{
-		BankAccount CreateAccount(string accountNumber, string username, decimal initialBalance);
+		BankAccount CreateAccount(Client client);
 		bool DeleteAccount(string accountNumber);
 		bool Deposit(string accountNumber, decimal amount);
 		bool Withdraw(string accountNumber, decimal amount);
