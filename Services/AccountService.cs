@@ -171,5 +171,30 @@ namespace BankSystemProject.Services
             return _bankAccounts;
         }
 
+        public string GetAccountNumber(Client client)
+        {
+            try
+            {
+                if (client == null)
+                {
+                    throw new ArgumentNullException(nameof(client), "Klient nie może być null.");
+                }
+
+                if (_bankAccounts.ContainsKey(client))
+                {
+                    return _bankAccounts[client].AccountNumber;
+                }
+
+                throw new InvalidOperationException("Klient nie posiada przypisanego konta.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Wystąpił błąd podczas pobierania numeru konta: {ex.Message}");
+                return null;
+            }
+        }
+
+
+
     }
 }
