@@ -13,6 +13,14 @@ namespace BankSystemProject.Enums
         Read,
         Write,
         Delete,
-        ManageUsers
+        ManageUsers,
+        ViewUsers,
+        ViewAccounts,
+        ModifyAccountBalance,
+        DeleteAccounts,
+        ViewTransactions,
+        InitiateTransactions,
+        ManageRoles,
+        ManagePermissions
     }
 }

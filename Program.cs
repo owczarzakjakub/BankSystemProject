@@ -21,25 +21,7 @@ namespace BankSystemProject
 
 
 
-            //userService.OnUserLogin += (username, success) =>
-            //{
-            //    if (success)
-            //    {
-            //        Console.WriteLine($"Użytkownik {username} zalogowany pomyślnie.");
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine($"Nieudana próba logowania dla użytkownika {username}.");
-            //    }
-            //};
-            //userService.Login("testUserName", "TestPassword");
-            //List<string> usersList = userService.GetAllUsers();
-            //foreach (var item in usersList)
-            //{
-            //    Console.WriteLine(item);
-            //}
-
-            //Console.ReadKey();
+            
         }
     }
 }
