@@ -10,6 +10,7 @@ namespace BankSystemProject.Services
     public class UserService : IUserService
     {
         private readonly List<BankUser> _users = new();
+        private Operacje_BazyDanych _bazaDanych;
 
         public delegate void UserRegisteredHandler(BankUser user);
         public event UserRegisteredHandler OnUserRegistered;
@@ -34,6 +35,7 @@ namespace BankSystemProject.Services
                 Roles = new List<Roles> { Roles.User }
 
             };
+            _bazaDanych.DodajRekord($"{newUser.Username};{newUser.Password};{newUser.Name};{newUser.LastName};{string.Join(",", newUser.Roles)}");
             _users.Add(newUser);
             OnUserRegistered?.Invoke(newUser);
             return true;

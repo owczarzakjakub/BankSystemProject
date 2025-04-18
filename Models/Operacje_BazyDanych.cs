@@ -9,10 +9,15 @@ public class Operacje_BazyDanych
         this.sciezkaPliku = sciezkaPliku;
 
         // Upewnij się, że plik istnieje
+        if (!Directory.Exists(Path.GetDirectoryName(sciezkaPliku)))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(sciezkaPliku));
+        }
         if (!File.Exists(sciezkaPliku))
         {
             File.Create(sciezkaPliku).Close();
         }
+
     }
 
     // Dodawanie rekordu do pliku
