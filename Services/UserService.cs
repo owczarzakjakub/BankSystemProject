@@ -18,7 +18,10 @@ namespace BankSystemProject.Services
         public delegate void UserLoginHandler(string username, bool succes);
         public event UserLoginHandler OnUserLogin;
 
-        public UserService() { }
+        public UserService(Operacje_BazyDanych bazaDanych)
+        {
+            _bazaDanych = bazaDanych
+        }
 
         public bool RegisterUser(string username, string password, string name, string lastName)
         {

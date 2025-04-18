@@ -14,9 +14,9 @@ namespace BankSystemProject
         static void Main(string[] args)
         {
             Console.WriteLine("1");
-            var testFile = new Operacje_BazyDanych("C:\\Users\\User\\source\\repos\\BankSystemProject\\Data");
+            var testFile = new Operacje_BazyDanych("C:\\Users\\User\\source\\repos\\BankSystemProject\\Data\\test.txt");
             var userService = new UserService();
-            userService.RegisterUser("testUserName", "testPassword", "testFirstName", "testLastName");
+            userService.RegisterUser("testUserName", "TestPassword", "TestFirstName", "TestLastName");
             Console.ReadKey();
         }
     }
