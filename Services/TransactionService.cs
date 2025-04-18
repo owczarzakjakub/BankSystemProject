@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using BankSystemProject.Enums;
 using BankSystemProject.Models;
+using BankSystemProject.Interfaces;
 
 
 
 namespace BankSystemProject.Services
 {
-    public class TransactionService
+    public class TransactionService : ITransactionService
     {
         private readonly List<Transaction> _transactions = new();
         private readonly AccountService _accountService;

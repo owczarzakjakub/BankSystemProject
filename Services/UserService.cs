@@ -1,19 +1,17 @@
 ﻿using System;
-using BankSystemProject.Enums;
 using System.Collections.Generic;
 using System.Linq;
 using BankSystemProject.Models;
+using BankSystemProject.Enums;
+using BankSystemProject.Interfaces;
 
 namespace BankSystemProject.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly List<BankUser> _users = new();
 
-        public UserService()
-        {
-
-        }
+        public UserService() { }
 
         public bool RegisterUser(string username, string password, string name, string lastName)
         {

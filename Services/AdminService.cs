@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using BankSystemProject.Models;
 using BankSystemProject.Enums;
+using BankSystemProject.Interfaces;
 
 
 namespace BankSystemProject.Services
 {
-    public class AdminService
+    public class AdminService : IAdminService
     {
         private readonly List<BankUser> _users;
         private readonly AccountService _accountService;

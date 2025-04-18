@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using BankSystemProject.Enums;
 using BankSystemProject.Models;
+using BankSystemProject.Interfaces;
 
 
 namespace BankSystemProject.Services
 {
-    public class AccountService
+    public class AccountService : IAccountService
     {
         private readonly List<BankAccount> _accounts;
 
@@ -22,7 +23,16 @@ namespace BankSystemProject.Services
             _accounts.Add(newAccount);
             return newAccount;
         }
-
+        public bool DeleteAccount(string accountNumber)
+        {
+            var account = _accounts.FirstOrDefault(a => a.AccountNumber == accountNumber);
+            if (account != null)
+            {
+                _accounts.Remove(account);
+                return true;
+            }
+            return false;
+        }
         public bool Deposit(string accountNumber, decimal amount)
         {
             var account = _accounts.FirstOrDefault(a => a.AccountNumber == accountNumber);
@@ -49,6 +59,10 @@ namespace BankSystemProject.Services
         {
             var account = _accounts.FirstOrDefault(a => a.AccountNumber == accountNumber);
             return account?.Balance ?? 0;
+        }
+        public List<BankAccount> GetAllAccounts()
+        {
+            return _accounts;
         }
     }
 }
